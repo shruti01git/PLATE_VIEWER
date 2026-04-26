@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import SearchBar from "./components/SearchBar.jsx";
 import CameraList from "./components/CameraList.jsx";
 import MapView from "./components/MapView.jsx";
+import data from './data/Data';
 import CameraAnalyticsPanel from "./components/CameraAnalyticsPanel.jsx";
 import { getJourneyForPlate, getCameraAnalytics, getAllCameraStats } from "./data.js";
 
