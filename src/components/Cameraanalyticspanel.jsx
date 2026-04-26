@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import React from 'react';
 
 const TYPE_COLORS = {
   Car: "#3b82f6",
