@@ -1,6 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import data from '../data/Data';
 import { useMemo, useEffect, useState } from "react";
 
 // Fix default marker icons in Leaflet bundlers
