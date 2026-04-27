@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 function Searchbar({ onSearch }) {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState("");
 
   return (
-    <div>
+    <div style={{ padding: "10px" }}>
       <input
         type="text"
-        placeholder="Enter plate number"
+        placeholder="Enter vehicle number"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
+
       <button onClick={() => onSearch(input)}>Search</button>
     </div>
-  )
+  );
 }
 
-export default Searchbar
+export default Searchbar;
