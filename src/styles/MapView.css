@@ -1,0 +1,127 @@
+/* MapView Component Styles */
+
+.map-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.map-header {
+  padding: 15px;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  min-height: 60px;
+}
+
+.map-header h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.detection-info {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.camera-list {
+  margin-top: 10px;
+}
+
+.camera-list h4 {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.camera-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-right: 8px;
+  margin-bottom: 6px;
+  background: #f0f0f0;
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.camera-btn:hover {
+  background: #e8e8e8;
+  border-color: #667eea;
+}
+
+.camera-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+}
+
+.map-container {
+  flex: 1;
+  min-height: 400px;
+  background: #f5f5f5;
+}
+
+.leaflet-container {
+  height: 100%;
+}
+
+.camera-popup,
+.detection-popup {
+  min-width: 200px;
+  line-height: 1.5;
+}
+
+.camera-popup h4,
+.detection-popup h4 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.camera-popup p,
+.detection-popup p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.camera-popup strong,
+.detection-popup strong {
+  color: #333;
+}
+
+.camera-popup button,
+.detection-popup button {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.camera-popup button:hover,
+.detection-popup button:hover {
+  background: #764ba2;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    min-height: 300px;
+  }
+
+  .camera-btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    margin-right: 6px;
+  }
+}

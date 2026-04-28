@@ -1,0 +1,256 @@
+/* CameraAnalyticsPanel Component Styles */
+
+.analytics-panel {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.analytics-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.analytics-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 30px;
+  color: #999;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.analytics-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  border-left: 3px solid #667eea;
+}
+
+.analytics-section h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #333;
+  font-size: 1rem;
+}
+
+/* Vehicle Types */
+.vehicle-types {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vehicle-type-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.type-bar {
+  height: 24px;
+  border-radius: 4px;
+  min-width: 50px;
+  flex: 1;
+  transition: all 0.2s;
+}
+
+.type-bar:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.type-label {
+  min-width: 80px;
+  text-transform: capitalize;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.type-count {
+  min-width: 40px;
+  text-align: right;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Top Plates */
+.top-plates {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.top-plate-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: white;
+  border-left: 3px solid #667eea;
+  border-radius: 4px;
+  gap: 10px;
+}
+
+.plate-rank {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.plate-number {
+  flex: 1;
+  font-weight: 600;
+  color: #333;
+  font-family: 'Courier New', monospace;
+}
+
+.plate-count {
+  background: #e8ecf8;
+  color: #667eea;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Detections List */
+.detections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detection-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  gap: 10px;
+  transition: all 0.2s;
+}
+
+.detection-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.1);
+}
+
+.detection-plate {
+  background: #667eea;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  min-width: 90px;
+  text-align: center;
+}
+
+.detection-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.detection-info p {
+  margin: 2px 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.detection-type {
+  font-weight: 600;
+  color: #333;
+}
+
+.detection-camera {
+  color: #667eea;
+  font-size: 0.8rem;
+}
+
+.detection-time {
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.detection-confidence {
+  background: #e8ecf8;
+  color: #667eea;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  min-width: 50px;
+  text-align: center;
+}
+
+.more-detections {
+  text-align: center;
+  color: #999;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.no-detections {
+  text-align: center;
+  color: #999;
+  padding: 20px;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detection-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detection-confidence {
+    align-self: flex-end;
+    margin-top: 8px;
+  }
+}

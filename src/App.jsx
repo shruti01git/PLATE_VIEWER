@@ -1,50 +1,129 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import './App.css'
 
-import Mapview from './components/Mapview'
+import MapView from './components/MapView'
 import Cameraanalyticspanel from './components/Cameraanalyticspanel'
-import Cameralist from './components/Cameralist'
-import Searchbar from './components/Searchbar'
-
-import data from './data/Data'
+import CameraList from './components/CameraList'
+import SearchBar from './components/SearchBar'
+import { apiService } from './services/api'
 
 function App() {
   const [filteredDetections, setFilteredDetections] = useState([])
+  const [searchPlate, setSearchPlate] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  const handleSearch = (plate) => {
-    const results = data.detections.filter(
-      (d) => d.plate.toLowerCase() === plate.toLowerCase()
-    )
+  useEffect(() => {
+    // Check API health on mount
+    checkApiHealth()
+  }, [])
 
-    setFilteredDetections(results)
+  const checkApiHealth = async () => {
+    try {
+      await apiService.checkHealth()
+      console.log('Backend API is healthy')
+    } catch (err) {
+      console.warn('Backend API is not available. Some features may not work.')
+      setError('Backend API is not available')
+    }
   }
 
-  // 🔥 Camera-wise count
-  const cameraCounts = {}
-  filteredDetections.forEach((d) => {
-    cameraCounts[d.camera] = (cameraCounts[d.camera] || 0) + 1
-  })
+  const handleSearch = async (plate) => {
+    if (!plate.trim()) {
+      setFilteredDetections([])
+      setSearchPlate('')
+      return
+    }
 
-  // 🔥 Unique vehicle count
+    setIsLoading(true)
+    setError(null)
+    setSearchPlate(plate)
+
+    try {
+      const results = await apiService.searchPlate(plate, 100)
+      
+      // Flatten detections from all cameras
+      const allDetections = []
+      if (results.cameras) {
+        results.cameras.forEach((camera) => {
+          allDetections.push(...(camera.detections || []))
+        })
+      }
+
+      // Sort by timestamp (newest first)
+      allDetections.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+
+      setFilteredDetections(allDetections)
+    } catch (err) {
+      console.error('Search failed:', err)
+      setError(`Search failed: ${err.message}`)
+      setFilteredDetections([])
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const uniqueVehicles = new Set(
     filteredDetections.map((d) => d.plate)
   ).size
 
   return (
-    <div style={{ padding: '10px' }}>
-      <h2>Connected Intelligence - Phase 2</h2>
+    <div className="app-container">
+      {/* Header */}
+      <header className="app-header">
+        <div className="header-content">
+          <h1>🚗 Multi-Camera Vehicle Intelligence System</h1>
+          <p className="header-subtitle">Real-time vehicle detection and tracking</p>
+        </div>
+      </header>
 
-      <Searchbar onSearch={handleSearch} />
+      {/* Search Section */}
+      <div className="search-section">
+        <SearchBar onSearch={handleSearch} />
 
-      <div style={{ margin: '10px 0' }}>
-        <span><b>Total Detections:</b> {filteredDetections.length}</span> |{" "}
-        <span><b>Unique Vehicles:</b> {uniqueVehicles}</span>
+        {error && <div className="error-message">⚠️ {error}</div>}
+
+        {isLoading && <div className="loading-message">🔍 Searching...</div>}
+
+        {searchPlate && (
+          <div className="search-results-summary">
+            <h3>Results for: <strong>{searchPlate}</strong></h3>
+            <div className="summary-stats">
+              <div className="stat">
+                <span className="stat-label">Total Detections</span>
+                <span className="stat-value">{filteredDetections.length}</span>
+              </div>
+              <div className="stat">
+                <span className="stat-label">Unique Camera Locations</span>
+                <span className="stat-value">
+                  {new Set(filteredDetections.map((d) => d.camera_id)).size}
+                </span>
+              </div>
+              <div className="stat">
+                <span className="stat-label">Last Detection</span>
+                <span className="stat-value">
+                  {filteredDetections.length > 0
+                    ? new Date(filteredDetections[0].timestamp).toLocaleString()
+                    : 'N/A'}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
-      <Cameralist cameraCounts={cameraCounts} />
+      {/* Main Content */}
+      <div className="main-content">
+        {/* Left Column: Analytics */}
+        <div className="left-panel">
+          <Cameraanalyticspanel detections={filteredDetections} />
+          <CameraList cameraCounts={{}} />
+        </div>
 
-      <div style={{ display: 'flex', marginTop: '10px' }}>
-        <Cameraanalyticspanel detections={filteredDetections} />
-        <Mapview detections={filteredDetections} />
+        {/* Right Column: Map */}
+        <div className="right-panel">
+          <MapView detections={filteredDetections} />
+        </div>
       </div>
     </div>
   )
